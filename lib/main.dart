@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list_app/widgets/check_box_widget.dart';
+import 'package:to_do_list_app/widgets/task_row_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,69 +32,33 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<String> tasks = ['Task 1', 'Task 2', 'Task 3'];
+
+  void addTask() {
+    setState(() {
+      tasks.add('Empty Task');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text(
-            widget.title,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(
+          widget.title,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        body: Center(
-          child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Theme.of(context).colorScheme.inversePrimary),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    MyCheckbox(),
-                    Text(
-                      'Task 1',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.fromLTRB(0, 0, 0, 8),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Theme.of(context).colorScheme.inversePrimary),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    MyCheckbox(),
-                    Text(
-                      'Task 2',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.fromLTRB(0, 0, 0, 8),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Theme.of(context).colorScheme.inversePrimary),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    MyCheckbox(),
-                    Text(
-                      'Task 3',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ));
+      ),
+      body: Center(
+        child: ListView(
+          children: tasks.map((task) => TaskRow(taskName: task)).toList(),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: addTask,
+        child: const Icon(Icons.add),
+      ),
+    );
   }
 }
